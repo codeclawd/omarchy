@@ -13,9 +13,9 @@ set -e
 # indistinguishable from a bad swipe, so the generic "please try again" sends
 # people into a retry loop that cannot succeed. Name the real cause instead.
 #
-# The list is python-validity's own udev match set, from its
-# 94-validity-sensors.rules.
-validity_readers=" 06cb:009a 138a:0090 138a:0097 "
+# The list is python-validity's SupportedDevices (validitysensor/usb.py), which
+# also covers 138a:009d where its udev rules stop at the other three.
+validity_readers=" 06cb:009a 138a:0090 138a:0097 138a:009d "
 
 has_validity_reader() {
   local dev vendor product
