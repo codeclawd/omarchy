@@ -128,7 +128,9 @@ if sudo fprintd-enroll "$USER"; then
     echo -e "\e[31m\nVerification failed. You may want to try enrolling again.\e[0m"
   fi
 else
-  if has_validity_reader; then
+  # Only when fprintd has no device at all: a bad swipe on a reader that
+  # python-validity already drives still deserves a retry.
+  if has_validity_reader && fprintd-list "$USER" 2>&1 | grep -q "No devices available"; then
     echo -e "\e[31m\nEnrollment failed: libfprint has no driver for this reader.\e[0m"
     echo "It is a Synaptics/Validity sensor that only the community"
     echo "python-validity driver can talk to, so retrying will not help:"
